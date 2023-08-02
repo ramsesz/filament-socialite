@@ -1,17 +1,24 @@
 <?php
 
-Route::domain(config('filament.domain'))
-    ->middleware(config('filament.middleware.base'))
+use DutchCodingCompany\FilamentSocialite\Http\Controllers\SocialiteLoginController;
+use Filament\Facades\Filament;
+use Illuminate\Support\Facades\Route;
+
+//TODO: Should be fixed dynamically in consuming app
+$adminPanel = Filament::getPanel('admin');
+
+Route::domain($adminPanel->getDomain())
+    ->middleware($adminPanel->getMiddleWare())
     ->name('socialite.')
     ->group(function () {
         Route::get('/oauth/{provider}', [
-            \DutchCodingCompany\FilamentSocialite\Http\Controllers\SocialiteLoginController::class,
+            SocialiteLoginController::class,
             'redirectToProvider',
         ])
             ->name('oauth.redirect');
 
         Route::get('/oauth/callback/{provider}', [
-            \DutchCodingCompany\FilamentSocialite\Http\Controllers\SocialiteLoginController::class,
+            SocialiteLoginController::class,
             'processCallback',
         ])
             ->name('oauth.callback');
