@@ -10,6 +10,8 @@ use Spatie\LaravelPackageTools\Package;
 
 class FilamentSocialiteServiceProvider extends PackageServiceProvider
 {
+    public static string $name = 'filament-socialite';
+
     public function packageRegistered(): void
     {
         $this->app->singleton(FilamentSocialite::class);
@@ -21,7 +23,7 @@ class FilamentSocialiteServiceProvider extends PackageServiceProvider
     public function configurePackage(Package $package): void
     {
         $package
-            ->name('filament-socialite')
+            ->name(static::$name)
             ->hasConfigFile()
             ->hasTranslations()
             ->hasViews()
